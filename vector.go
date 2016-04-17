@@ -27,7 +27,7 @@ type IDVectorOperator interface {
 	Add(Vec1) Vec1
 	Dot(Vec1) float64
 	Equal(Vec1) bool
-	Multiply(float64) Vec1
+	MultiplyScalar(float64) Vec1
 	Subtract(Vec1) Vec1
 	Square() float64
 }
@@ -50,7 +50,7 @@ type IIDVectorOperator interface {
 	Dot(Vec2) float64
 	Equal(Vec2) bool
 	Length() float64
-	Multiply(float64) Vec2
+	MultiplyScalar(float64) Vec2
 	Normalize() Vec2
 	Square() float64
 	Subtract(Vec2) Vec2
@@ -74,7 +74,7 @@ type IIIDVectorOperator interface {
 	Dot(Vec3) float64
 	Equal(Vec3) bool
 	Length() float64
-	Multiply(float64) Vec3
+	MultiplyScalar(float64) Vec3
 	Normalize() Vec3
 	Square() float64
 	Subtract(Vec3) Vec3
@@ -98,7 +98,7 @@ type IVDVectorOperator interface {
 	Dot(Vec4) float64
 	Equal(Vec4) bool
 	Length() float64
-	Multiply(float64) Vec4
+	MultiplyScalar(float64) Vec4
 	Normalize() Vec4
 	Square() float64
 	Subtract(Vec4) Vec4
@@ -120,7 +120,7 @@ type NDVectorOperator interface {
 	Dot(Vector) float64
 	Equal(Vector) bool
 	Length() float64
-	Multiply(float64) VecN
+	MultiplyScalar(float64) VecN
 	Normalize() VecN
 	Square() float64
 	Subtract(Vector) VecN

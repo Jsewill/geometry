@@ -14,12 +14,26 @@ func (v VecN) A() float64 {
 //Adds the two vectors together, possibly returning a vector containing more components than the receiver.
 func (v VecN) Add(a Vector) VecN {
 	if a.Len() < 1 {
-		return v
+		return VecN(v[:])
 	}
 
 	o := VecN{}
 
 	for i, c := range a.Components() {
+		o = append(o, v.Component(i)+c)
+	}
+
+	return o
+}
+
+func (v VecN) AddScalar(a float64) VecN {
+	if a == 0 {
+		return VecN(v[:])
+	}
+
+	o := VecN{}
+
+	for i, c := range v.Components() {
 		o = append(o, v.Component(i)+c)
 	}
 
@@ -80,6 +94,40 @@ func (v VecN) CrossLength(c Vector) float64 {
 	return math.Sqrt(vd * cd * (1 - (v.Dot(c) / (vd * cd))))
 }
 
+func (v VecN) Divide(d Vector) VecN {
+	if v.Len() < 1 || d.Len() < 1 {
+		return VecN(v[:])
+	}
+	p := VecN{}
+
+	for i, n := range v {
+		if n == 0 || d.Component(i) == 0 {
+			p = append(p, 0)
+		} else {
+			p = append(p, n/d.Component(i))
+		}
+	}
+
+	return p
+}
+
+func (v VecN) DivideScalar(d float64) VecN {
+	if d == 0 {
+		return make(VecN, v.Len())
+	}
+	p := VecN{}
+
+	for _, n := range v {
+		if n == 0 {
+			p = append(p, 0)
+		} else {
+			p = append(p, n/d)
+		}
+	}
+
+	return p
+}
+
 func (v VecN) Dot(d Vector) float64 {
 	if d.Len() < 1 {
 		return v.Sum()
@@ -108,8 +156,16 @@ func (v VecN) Equal(e Vector) bool {
 	return true
 }
 
+func (v VecN) Expand() VecN {
+	return VecN(append(v[:], 0))
+}
+
 func (v VecN) G() float64 {
 	return v.Component(1)
+}
+
+func (v VecN) Homogenize() VecN {
+	return VecN(append(v[:], 1))
 }
 
 func (v VecN) Len() int {
@@ -120,7 +176,7 @@ func (v VecN) Length() float64 {
 	return math.Sqrt(v.Dot(v))
 }
 
-func (v VecN) Multiply(m float64) VecN {
+func (v VecN) MultiplyScalar(m float64) VecN {
 	p := VecN{}
 
 	for _, n := range v {
@@ -132,7 +188,7 @@ func (v VecN) Multiply(m float64) VecN {
 
 func (v VecN) Normalize() VecN {
 	d := 1.0 / v.Length()
-	return v.Multiply(d)
+	return v.MultiplyScalar(d)
 }
 
 func (v VecN) P() float64 {
@@ -195,6 +251,20 @@ func (v VecN) Subtract(s Vector) VecN {
 
 	for i, n := range v {
 		d = append(d, n-s.Component(i))
+	}
+
+	return d
+}
+
+func (v VecN) SubtractScalar(s float64) VecN {
+	if s == 0 {
+		return VecN(v[:])
+	}
+
+	d := VecN{}
+
+	for _, n := range v {
+		d = append(d, n-s)
 	}
 
 	return d

@@ -44,7 +44,7 @@ func IsPointInCylinder(p, v1, v2 Vec3, r float64) bool {
 	}
 
 	//Get distance along the aforementioned projection vector by ab*dot, then making it relative to ax.
-	dist := ax.Subtract(ab.Multiply(dot))
+	dist := ax.Subtract(ab.MultiplyScalar(dot))
 
 	//If the magnitude of the projected vertex exceeds the radius, we're outside the cylinder volume.
 	if dist.Square() > math.Pow(r, 2) {
