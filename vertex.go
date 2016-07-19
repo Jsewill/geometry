@@ -14,8 +14,8 @@ func (v *Vertex) Len() int {
 	return 1
 }
 
-func (v *Vertex) Vertex(i int) Vertex {
-	return Vertex{v.Attributes, v.Color, v.Normal, v.TextureMap, v.Vec3}
+func (v *Vertex) Vertex(i int) *Vertex {
+	return v
 }
 
 func (v *Vertex) Vertices() []Vertex {
